@@ -1,0 +1,39 @@
+[project]
+name = "pulse"
+version = "0.1.0"
+description = "Synthetic customer analytics and experimentation for digital banking"
+requires-python = ">=3.11,<3.13"
+dependencies = [
+    "duckdb>=1.0",
+    "ipykernel>=6.29",
+    "matplotlib>=3.8",
+    "nbclient>=0.10",
+    "nbformat>=5.10",
+    "numpy>=1.26",
+    "pandas>=2.2",
+    "pyarrow>=16.0",
+    "pymupdf>=1.24",
+    "pyyaml>=6.0",
+    "reportlab>=4.2",
+    "scikit-learn>=1.5",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+
+[project.scripts]
+pulse-simulate = "pulse.simulation.generator:main"
+pulse-warehouse = "pulse.warehouse.build:main"
+pulse-pipeline = "pulse.pipeline:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+extend-exclude = ["notebooks"]

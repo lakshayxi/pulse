@@ -1,0 +1,11 @@
+# Public simulation controls. Private mechanisms used to generate outcomes live
+# in src/pulse/simulation/ground_truth.py and are never loaded by analytics.
+observation_days: 120
+activation_window_days: 7
+retention_windows:
+  d7: [7, 13]
+  d30: [30, 36]
+  d60: [60, 66]
+  d90: [90, 96]
+meaningful_transaction_types: [card_transaction, transfer, bill_payment]
+transaction_failure_rate: 0.07

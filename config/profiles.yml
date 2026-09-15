@@ -1,0 +1,4 @@
+profiles:
+  ci: { customers: 2000, seed: 1729 }
+  dev: { customers: 20000, seed: 1729 }
+  full: { customers: 100000, seed: 1729 }
