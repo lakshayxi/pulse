@@ -149,8 +149,9 @@ def _validate(
     if set(by_arm) != {"control", "treatment"}:
         raise ValueError("experiment_summary.csv must contain control and treatment arms")
     eligible = float(_get(results, "experiment.eligible_per_arm"))
-    if int(by_arm["control"]["customers"]) != round(eligible):
-        raise ValueError("results.json eligible_per_arm does not match control arm")
+    smaller_arm = min(int(row["customers"]) for row in by_arm.values())
+    if smaller_arm != round(eligible):
+        raise ValueError("results.json eligible_per_arm does not match the smaller experiment arm")
     for arm in ("control", "treatment"):
         if int(by_arm[arm]["customers"]) != int(_get(results, f"experiment.{arm}_customers")):
             raise ValueError(f"{arm} denominator does not match results.json")
