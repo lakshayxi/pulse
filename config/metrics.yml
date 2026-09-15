@@ -1,0 +1,5 @@
+activation: "funded and at least one meaningful financial transaction within 7 days of signup"
+meaningful_activity: [card_transaction, transfer, bill_payment]
+retention: "active on day N, where active means at least one meaningful financial transaction in the N-day observation window"
+churn: "active at feature cutoff and no meaningful financial activity in the following 30 days"
+experiment_primary: first_week_activation
