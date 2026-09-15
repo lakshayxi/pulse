@@ -21,6 +21,9 @@ def _get(results: dict[str, Any], path: str) -> Any:
 
 def _render(results: dict[str, Any]) -> str:
     customers = int(_get(results, "dataset.customers"))
+    eligible = int(_get(results, "experiment.control_customers")) + int(
+        _get(results, "experiment.treatment_customers")
+    )
     risk_difference = float(_get(results, "experiment.risk_difference")) * 100
     ci_low = float(_get(results, "experiment.ci_low")) * 100
     ci_high = float(_get(results, "experiment.ci_high")) * 100
@@ -28,9 +31,9 @@ def _render(results: dict[str, Any]) -> str:
     d30 = float(_get(results, "journey.mature_retention.d30")) * 100
     d60 = float(_get(results, "journey.mature_retention.d60")) * 100
     d90 = float(_get(results, "journey.mature_retention.d90")) * 100
-    model = str(_get(results, "churn_model.selected_model")).replace("_", " ")
     auc = float(_get(results, "churn_model.roc_auc"))
     lift = float(_get(results, "churn_model.lift_at_10pct"))
+    holdout = int(_get(results, "churn_model.evaluation_customers"))
     did = float(_get(results, "causal.did_effect")) * 100
     iptw = float(_get(results, "causal.iptw_did_effect")) * 100
     contacts = int(_get(results, "economics.decision_summary.customers_contacted"))
@@ -39,13 +42,13 @@ def _render(results: dict[str, Any]) -> str:
 <!-- Generated from artifacts/results.json by scripts/update_readme.py. -->
 The frozen full run contains {customers:,} synthetic customers covering {_get(results, "dataset.date_start")} through {_get(results, "dataset.date_end")}.
 
-- The randomized intervention increases first-week activation by {risk_difference:.2f} percentage points. The recorded 95% confidence interval is +{ci_low:.2f} to +{ci_high:.2f} percentage points for eligible customers.
-- Mature-cohort retention declines from {d7:.1f}% at D7 to {d30:.1f}% at D30, {d60:.1f}% at D60, and {d90:.1f}% at D90.
-- The selected churn model is a {model} model. It records ROC AUC {auc:.3f} and top-decile lift {lift:.3f} on a later temporal holdout. This is a modest predictive association, not a causal treatment-benefit estimate.
-- The observational campaign estimate is a {did:.2f} percentage-point unweighted DiD effect and a {iptw:.2f} percentage-point IPTW DiD effect. Its normal-approximation standard error ignores within-customer correlation.
-- Every positive-contact strategy has negative expected net value under the fictional assumptions in [`config/economics.yml`](config/economics.yml). The expected-value strategy contacts {contacts:,} customers and records {net_value:,.0f} expected net value.
+- **Activation:** {eligible:,} eligible customers produce a +{risk_difference:.2f} percentage-point risk difference. The 95% confidence interval is +{ci_low:.2f} to +{ci_high:.2f} points.
+- **Retention:** Mature retention moves from {d7:.1f}% at D7 to {d30:.1f}% at D30, {d60:.1f}% at D60, and {d90:.1f}% at D90.
+- **Campaign:** Difference-in-differences estimates +{did:.2f} percentage points. Stabilized inverse-probability-of-treatment weighting estimates +{iptw:.2f} percentage points.
+- **Churn ranking:** Receiver operating characteristic area under the curve is {auc:.3f}. Top-decile lift is {lift:.3f} on {holdout:,} holdout customers.
+- **Contact policy:** Every strategy that contacts customers loses value under the fictional assumptions. The expected-value policy contacts {contacts:,} customers and records {net_value:,.0f} expected net value.
 
-The decision is therefore narrow: keep the activation intervention behind a controlled experiment, and do not launch a positive-contact campaign under these assumptions. A rollout still requires incremental-value evidence, guardrail monitoring, and refreshed unit economics.
+Under these synthetic assumptions, continue controlled activation testing. Do not launch customer outreach.
 {END}"""
 
 

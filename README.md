@@ -1,133 +1,121 @@
 # Pulse
 
-Pulse is a reproducible customer-analytics case study for a fictional digital bank. It follows one decision path: acquisition, onboarding, activation, retention, intervention evaluation, churn scoring, and contact economics.
+[![CI](https://github.com/lakshayxi/pulse/actions/workflows/ci.yml/badge.svg)](https://github.com/lakshayxi/pulse/actions/workflows/ci.yml)
+[![Python 3.11-3.12](https://img.shields.io/badge/python-3.11--3.12-3776AB.svg?logo=python&logoColor=white)](pyproject.toml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-2E7D32.svg)](LICENSE)
 
-The repository uses synthetic data. It demonstrates an auditable analytical workflow. It does not establish production performance or customer impact.
+Pulse tests where a digital bank should intervene across activation, retention, churn risk, and contact economics.
 
-## The problem
+The central result is deliberate: a positive activation effect does not justify outreach with negative expected value. Every customer and outcome is synthetic.
 
-A digital bank needs to decide where to focus early-lifecycle work. The team must answer four linked questions:
+**Start here:** [reviewer report](reports/pulse_case_study.pdf) · [results manifest](artifacts/results.json) · [executed notebooks](notebooks/)
 
-1. Where do customers drop from signup to sustained engagement?
-2. Does an activation intervention increase first-week activation?
-3. What can an observational retention campaign estimate when randomization is unavailable?
-4. Can a model and an economic policy identify profitable contacts?
+---
 
-Pulse keeps these questions separate. Randomized estimates support the activation decision. Observational estimates remain conditional on design assumptions. Predictive scores rank customers. Unit economics decide whether contact is worthwhile.
-
-## What is built
-
-- Deterministic synthetic customer, event, transaction, experiment, campaign, and product tables.
-- An India-informed lifecycle simulation with delayed activation, reactivation, changing cohort mix, and an explicit public-evidence boundary.
-- DuckDB warehouse models and SQL validation checks.
-- A single metric contract for activation, D7/D30/D60/D90 retention, and churn.
-- A customer journey and cohort analysis with generated tables and figures.
-- A randomized activation experiment with balance, guardrail, effect, confidence-interval, and power outputs.
-- A selected-region campaign analysis with difference-in-differences and stabilized inverse-probability-of-treatment weighting (IPTW) diagnostics.
-- Temporal-holdout churn and response propensity models with calibration, lift, and monitoring outputs.
-- An economic targeting policy that compares contact-all, risk, value, response, and expected-value strategies.
-- A runtime-driven A4 LaTeX case-study report generated from the frozen artifacts.
-
-## Main findings
+## Decision in one minute
 
 <!-- BEGIN GENERATED FINDINGS -->
 <!-- Generated from artifacts/results.json by scripts/update_readme.py. -->
 The frozen full run contains 100,000 synthetic customers covering 2025-01-01 through 2026-01-25.
 
-- The randomized intervention increases first-week activation by 9.16 percentage points. The recorded 95% confidence interval is +8.28 to +10.05 percentage points for eligible customers.
-- Mature-cohort retention declines from 29.7% at D7 to 23.6% at D30, 20.5% at D60, and 16.3% at D90.
-- The selected churn model is a regularized logistic model. It records ROC AUC 0.752 and top-decile lift 2.673 on a later temporal holdout. This is a modest predictive association, not a causal treatment-benefit estimate.
-- The observational campaign estimate is a 1.03 percentage-point unweighted DiD effect and a 0.95 percentage-point IPTW DiD effect. Its normal-approximation standard error ignores within-customer correlation.
-- Every positive-contact strategy has negative expected net value under the fictional assumptions in [`config/economics.yml`](config/economics.yml). The expected-value strategy contacts 0 customers and records 0 expected net value.
+- **Activation:** 37,340 eligible customers produce a +9.16 percentage-point risk difference. The 95% confidence interval is +8.28 to +10.05 points.
+- **Retention:** Mature retention moves from 29.7% at D7 to 23.6% at D30, 20.5% at D60, and 16.3% at D90.
+- **Campaign:** Difference-in-differences estimates +1.03 percentage points. Stabilized inverse-probability-of-treatment weighting estimates +0.95 percentage points.
+- **Churn ranking:** Receiver operating characteristic area under the curve is 0.752. Top-decile lift is 2.673 on 11,728 holdout customers.
+- **Contact policy:** Every strategy that contacts customers loses value under the fictional assumptions. The expected-value policy contacts 0 customers and records 0 expected net value.
 
-The decision is therefore narrow: keep the activation intervention behind a controlled experiment, and do not launch a positive-contact campaign under these assumptions. A rollout still requires incremental-value evidence, guardrail monitoring, and refreshed unit economics.
+Under these synthetic assumptions, continue controlled activation testing. Do not launch customer outreach.
 <!-- END GENERATED FINDINGS -->
 
-## Strongest evidence
+<img src="artifacts/figures/rct_effect_ci.png" alt="Randomized activation effect of 9.16 percentage points with a 95% confidence interval from 8.28 to 10.05 points" width="100%">
 
-These figures provide the shortest route through the project:
+The randomized estimate applies to the synthetic eligible population. It does not establish profit, durable retention, or external validity.
 
-- [Customer journey funnel](artifacts/figures/journey_funnel.png)
-- [RCT activation effect and confidence interval](artifacts/figures/rct_effect_ci.png)
-- [Temporal churn model comparison](artifacts/figures/churn_model_comparison.png)
-- [Targeting strategy expected value](artifacts/figures/targeting_strategy_value.png)
+---
 
-The full recruiter-facing artifact is [`reports/pulse_case_study.pdf`](reports/pulse_case_study.pdf).
+## The lifecycle uses different denominators
 
-## Architecture
+Overall D30 retention is 23.604%. Sequential sustained D30 engagement is 20.909%. The metrics answer different questions.
+
+<img src="artifacts/figures/journey_funnel.png" alt="Journey funnel from 100,000 signups to 20,909 customers with sustained D30 engagement" width="100%">
+
+The simulation does not force each cohort window to decrease. The June 2025 cohort rises from 19.18% at D30 to 20.02% at D60.
+
+<img src="artifacts/figures/cohort_retention.png" alt="Retention heatmap by signup cohort across D7, D30, D60, and D90 windows" width="100%">
+
+This increase represents simulated reactivation. Public Indian-bank disclosures informed lifecycle structure, not these numerical retention levels.
+
+---
+
+## How Pulse reaches a decision
+
+1. Generate deterministic customers, events, transactions, experiments, campaigns, and product holdings.
+2. Materialize metric tables in DuckDB and validate them with SQL checks.
+3. Estimate randomized and observational intervention effects under separate claim boundaries.
+4. Evaluate churn and response models on later temporal holdouts.
+5. Combine predicted risk, response, value, cost, and capacity in the contact policy.
+6. Generate tables, figures, notebooks, and the reviewer-facing LaTeX report from one evidence layer.
 
 ```mermaid
 flowchart LR
-    A[Deterministic simulation] --> B[Parquet source tables]
-    B --> C[DuckDB warehouse and SQL checks]
-    C --> D[Metric and feature tables]
-    D --> E[Journey and cohort analysis]
-    D --> F[RCT and observational causal analysis]
-    D --> G[Temporal-holdout models]
-    E --> H[Tables and figures]
-    F --> H
-    G --> H
-    H --> I[results.json]
-    I --> J[LaTeX evidence include]
-    J --> K[Reviewer-facing PDF]
+    A[Synthetic lifecycle] --> B[Parquet tables]
+    B --> C[DuckDB and SQL checks]
+    C --> D[Journey and cohorts]
+    C --> E[Experiment and campaign]
+    C --> F[Temporal models]
+    D --> G[Evidence artifacts]
+    E --> G
+    F --> G
+    G --> H[Contact economics]
+    G --> I[LaTeX report]
 ```
 
-The warehouse owns canonical metric tables. Analysis utilities calculate statistics over those tables. The report owns narrative and reads the generated manifest, tables, and PNG figures at runtime. The LaTeX input generator validates key denominators before it writes the report include.
+## Run it
 
-## Reproduce
-
-The shortest full path is:
+Requires Python 3.11 or 3.12 and [`uv`](https://docs.astral.sh/uv/).
 
 ```bash
-make setup
-make all
-```
-
-The equivalent explicit dependency install is:
-
-```bash
+git clone https://github.com/lakshayxi/pulse
+cd pulse
 uv sync --extra dev --locked
-```
 
-Run the full 100,000-customer pipeline:
-
-```bash
-uv run pulse-pipeline --profile full --data-dir data/generated --artifact-dir artifacts
-```
-
-Run the test suite and Ruff:
-
-```bash
+# Run the fast profile used by continuous integration.
+uv run --locked python -m pulse.pipeline --profile ci
 uv run --locked pytest -q
-uv run --locked ruff check .
-uv run --locked ruff format --check .
 ```
 
-Build the report from the generated artifacts:
+Regenerate the full 100,000-customer evidence layer:
+
+```bash
+uv run --locked python -m pulse.pipeline --profile full
+```
+
+Build the report with `tectonic` available on `PATH`:
 
 ```bash
 make report
 ```
 
-`make report` runs `scripts/build_latex_inputs.py`, validates the report denominators, and compiles [`reports/pulse_case_study.tex`](reports/pulse_case_study.tex) with `tectonic` from `PATH`. Set `TECTONIC=/path/to/tectonic` when the executable is elsewhere. The generated evidence include is [`reports/pulse_case_study_inputs.tex`](reports/pulse_case_study_inputs.tex). Tectonic writes the PDF to [`reports/pulse_case_study.pdf`](reports/pulse_case_study.pdf).
+## Inspect the evidence
 
-## Artifacts
+| Artifact | What it establishes |
+|---|---|
+| [`artifacts/results.json`](artifacts/results.json) | Headline metrics, denominators, assumptions, and claim scopes |
+| [`artifacts/tables/`](artifacts/tables/) | Detailed journey, experiment, campaign, model, monitoring, and economics outputs |
+| [`notebooks/`](notebooks/) | Six executed analytical walkthroughs |
+| [`docs/metric_definitions.md`](docs/metric_definitions.md) | Activation, retention, churn, and denominator contracts |
+| [`docs/methodology.md`](docs/methodology.md) | Identification, evaluation, monitoring, and economic assumptions |
+| [`reports/pulse_case_study.pdf`](reports/pulse_case_study.pdf) | Formal 11-page reviewer report |
 
-- [`artifacts/results.json`](artifacts/results.json) records the run-level manifest, headline metrics, claim scopes, assumptions, and limitations.
-- [`artifacts/tables/`](artifacts/tables/) contains journey, cohort, experiment, causal, modelling, monitoring, economics, and SQL outputs.
-- [`artifacts/figures/`](artifacts/figures/) contains PNG and SVG figures generated from the tables.
-- [`reports/pulse_case_study.pdf`](reports/pulse_case_study.pdf) is the reviewer-facing technical report produced from the generated LaTeX evidence include.
-- [`notebooks/`](notebooks/) contains six executed analytical working documents that read the generated evidence rather than duplicating pipeline logic.
-- [`docs/metric_definitions.md`](docs/metric_definitions.md), [`docs/methodology.md`](docs/methodology.md), and [`docs/experiment_design.md`](docs/experiment_design.md) record the metric, causal, and experiment contracts.
-- [`docs/external_calibration.md`](docs/external_calibration.md) records the SBI, Axis Bank, HDFC Bank, ICICI Bank, and Kotak Mahindra Bank disclosures used as directional design evidence.
+## Boundaries
 
-## Limitations
+- All data come from a deterministic synthetic simulation. They are not customer data.
+- Indian-bank disclosures inform lifecycle structure only. They do not provide comparable retention benchmarks.
+- Random assignment supports the activation estimate only for the stated eligible population and outcome.
+- The campaign estimate depends on parallel trends, measured overlap, and no unmeasured confounding.
+- Churn and response scores are predictive. They do not estimate incremental treatment benefit.
+- Contact economics use fictional effects, values, costs, incentives, and capacity.
 
-- All data are behaviourally plausible synthetic simulation. They are not customer data.
-- Indian-bank public disclosures inform lifecycle structure only. They do not publish comparable Pulse-style signup-cohort retention, so the synthetic D7/D30/D60/D90 levels are not peer benchmarks.
-- Random assignment supports the activation result only for the stated eligible population and primary metric.
-- The selected-region campaign is observational. Difference-in-differences depends on parallel trends and related assumptions. IPTW diagnostics address measured balance and overlap, not unmeasured confounding.
-- The reported IPTW uncertainty uses a normal approximation on weighted customer-week means and ignores within-customer correlation.
-- Churn and response propensity models measure predictive association. They do not estimate incremental treatment benefit or uplift.
-- The economic policy depends on fictional treatment-effect, value, contact-cost, incentive-cost, and capacity assumptions.
-- The full pipeline can regenerate artifacts. Generated data and outputs are not a substitute for a production data-quality, privacy, or deployment review.
+## License
+
+[MIT](LICENSE)
