@@ -1,0 +1,5 @@
+unit_economics:
+  treatment_effect_if_response: 0.12
+  contact_cost: 0.25
+  incentive_cost: 0.50
+  capacity_fraction: 0.10
