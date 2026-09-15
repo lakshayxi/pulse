@@ -1,0 +1,7 @@
+guardrail,value,threshold,p_value,status,definition
+sample_ratio_mismatch,0.500615961435458,0.02,0.8118412560677639,pass,"Prespecified expected 50:50 allocation, two-sided alpha=0.01, absolute tolerance=0.02."
+max_absolute_smd,0.022554100766324216,0.1,,pass,
+minimum_detectable_effect,0.013341703611964023,0.0,,context,"Normal-approximation MDE, not a pass/fail safety guardrail."
+support_contact_rate_difference,0.01874141644366236,0.05,,pass,Treatment minus control mean support contacts per eligible customer.
+failed_payment_rate_difference,-0.005422110430094072,0.03,,pass,Treatment minus control first-week failed-attempt rate.
+incentive_cost_per_customer,0.35,0.5,,pass,Mean fictional incentive currency units per treated eligible customer.

@@ -1,0 +1,150 @@
+{
+  "schema_version": "1.0",
+  "dataset": {
+    "synthetic": true,
+    "customers": 100000,
+    "date_start": "2025-01-01",
+    "date_end": "2026-01-25"
+  },
+  "journey": {
+    "activation_rate": 0.42254,
+    "d30_retention": 0.23604,
+    "sequential_sustained_engagement_d30": 0.20909,
+    "activation_contract": "Funded and at least one settled meaningful transaction in signup calendar days 0-7 inclusive.",
+    "retention_windows": {
+      "d7": "D7-13",
+      "d30": "D30-36",
+      "d60": "D60-66",
+      "d90": "D90-96"
+    },
+    "mature_retention": {
+      "d7": 0.29743245832693926,
+      "d30": 0.23600196563676398,
+      "d60": 0.20507190446969079,
+      "d90": 0.16267294516120848
+    }
+  },
+  "experiment": {
+    "primary_metric": "first_week_activation",
+    "control_customers": 18647,
+    "treatment_customers": 18693,
+    "control_activations": 12985,
+    "treatment_activations": 14730,
+    "control_rate": 0.6963586635919987,
+    "treatment_rate": 0.7879955063392714,
+    "risk_difference": 0.09163684274727268,
+    "ci_low": 0.08281129558889232,
+    "ci_high": 0.10046238990565305,
+    "z_statistic": 20.241535395248512,
+    "p_value": 0.0,
+    "mde": 0.013341703611964023,
+    "eligible_per_arm": 18647.0,
+    "claim_scope": "Randomized experiment estimate for eligible customers."
+  },
+  "churn_model": {
+    "selected_model": "regularized_logistic",
+    "selection_rule": "Regularized logistic is fixed as the selected operational model for interpretability; the comparison table remains the evaluation record.",
+    "brier": 0.13349407538542232,
+    "roc_auc": 0.7518396174208186,
+    "pr_auc": 0.4394085252804957,
+    "evaluation_customers": 11728,
+    "evaluation_events": 2300,
+    "top_decile_customers": 1173,
+    "lift_at_10pct": 2.6734571333259205,
+    "capture_at_10pct": 0.2673913043478261,
+    "precision_at_10pct": 0.5242966751918159,
+    "claim_scope": "Predictive association on a later temporal holdout, not causal effect."
+  },
+  "model_comparison": {
+    "table": "churn_model_comparison.csv",
+    "figure": "churn_model_comparison.svg",
+    "evaluation": "later temporal holdout"
+  },
+  "response_propensity": {
+    "brier": 0.16344203074746402,
+    "roc_auc": 0.6066410694920426,
+    "pr_auc": 0.8419177084752294,
+    "evaluation_customers": 4635,
+    "evaluation_events": 3651,
+    "top_decile_customers": 464,
+    "lift_at_10pct": 1.16007423568413,
+    "capture_at_10pct": 0.11613256642015886,
+    "precision_at_10pct": 0.9137931034482759,
+    "model_target": "Treated-outcome propensity: observed activation probability among treated eligible customers.",
+    "claim_scope": "Predictive association among treated, eligible customers; not incremental treatment benefit."
+  },
+  "monitoring": {
+    "max_feature_psi": 0.002269320141729898,
+    "table": "monitoring.csv",
+    "figure": "drift_over_time.svg",
+    "performance_table": "monitoring_performance.csv",
+    "performance_figure": "model_performance_over_time.svg",
+    "selected_model": "regularized_logistic",
+    "status": {
+      "useful": true,
+      "recalibration_indication": false,
+      "retraining_indication": false
+    },
+    "evidence": {
+      "holdout_months": 3,
+      "mean_base_rate": 0.18715081647203582,
+      "max_calibration_error": 0.023932873196343407,
+      "min_roc_auc": 0.7384579152297625,
+      "min_lift_at_10pct": 2.4772533427810366
+    }
+  },
+  "causal": {
+    "design": "selected-region observational campaign; DiD plus stabilized IPTW diagnostics",
+    "comparison_customers": 21275,
+    "selected_region_customers": 28540,
+    "treated_pre": 0.2184915907498248,
+    "treated_post": 0.1944551506657323,
+    "control_pre": 0.21497062279670975,
+    "control_post": 0.18061104582843712,
+    "treated_change": -0.024036440084092503,
+    "control_change": -0.03435957696827263,
+    "did_effect": 0.010323136884180129,
+    "iptw_did_effect": 0.009476567011063891,
+    "iptw_standard_error": 0.004362379314637099,
+    "iptw_ci_low": 0.0009263035543751776,
+    "iptw_ci_high": 0.018026830467752605,
+    "uncertainty_method": "normal approximation on weighted customer-week means; ignores within-customer correlation",
+    "effective_sample_size": 42116.2497698531,
+    "pretrend_table": "campaign_pretrend.csv",
+    "overlap_table": "campaign_overlap.csv",
+    "balance_table": "campaign_iptw_balance.csv",
+    "trust_status": "pass",
+    "claim_scope": "Observational estimate subject to overlap, measured balance, and parallel-trends limitations."
+  },
+  "economics": {
+    "assumptions": {
+      "treatment_effect_if_response": 0.12,
+      "contact_cost": 0.25,
+      "incentive_cost": 0.5,
+      "capacity_fraction": 0.1
+    },
+    "strategy_table": "targeting_strategy_comparison.csv",
+    "sensitivity_table": "economics_sensitivity.csv",
+    "decision_summary": {
+      "best_strategy": "expected_value",
+      "evaluated_population": 11728,
+      "customers_contacted": 0,
+      "contact_rate": 0.0,
+      "expected_net_value": 0.0,
+      "expected_net_value_per_10k": 0.0
+    },
+    "claim_scope": "Scenario analysis conditional on stated fictional unit-economics assumptions."
+  },
+  "sql_evidence": {
+    "database": "pulse.duckdb",
+    "tables": [
+      "sql_channel_rank.csv",
+      "sql_experiment_effect.csv",
+      "sql_funnel.csv"
+    ]
+  },
+  "limitations": [
+    "All data are behaviourally plausible synthetic simulation.",
+    "Observational associations are not causal claims."
+  ]
+}

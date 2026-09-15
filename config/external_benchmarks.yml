@@ -1,0 +1,52 @@
+as_of: 2026-09-14
+scope: >-
+  Directional public evidence for synthetic lifecycle design. These disclosures
+  are not comparable D7/D30/D60/D90 signup-cohort retention benchmarks.
+benchmarks:
+  - bank: State Bank of India
+    period: FY2025
+    evidence: >-
+      YONO had 8.8 crore registered users, up from 7.4 crore in March 2024;
+      retail internet banking had 13.9 crore customers.
+    implication: Model multiple digital channels and changing adoption mixes.
+    source: SBI FY25 Analyst Presentation
+    page: slide 46
+    url: https://sbi.bank.in/documents/17836/0/SBI%2BAnalyst%2BPresentation%2BQ4FY25.pdf/d496fee6-a237-4328-a5ff-7246e4b736b4?t=1746263845521
+  - bank: Axis Bank
+    period: FY2025
+    evidence: >-
+      Mobile banking had about 3 crore registered customers and more than
+      15 million monthly active users; the open platform covered 30+ products.
+    implication: Separate registration, monthly activity, and product depth.
+    source: Axis Bank Integrated Annual Report 2024-25
+    page: 127
+    url: https://www.axisbank.com/docs/default-source/annual-reports/for-axis-bank/annual-report-for-the-year-2024-2025.pdf
+  - bank: HDFC Bank
+    period: FY2025
+    evidence: >-
+      The bank reported 3.7 crore+ monthly customer engagements on HDFC Bank
+      One, 97% of financial transactions through digital channels, and 19.3
+      lakh merchants onboarded to SmartHub Vyapar.
+    implication: Use heterogeneous retail and merchant activity intensity.
+    source: HDFC Bank Integrated Annual Report 2024-25
+    page: 7 and 140-141
+    url: https://www.hdfc.bank.in/content/dam/hdfcbankpws/in/en/pdf/annual-reports/2024-25/HDFC_Bank_Annual_Report_2024_25-310202.pdf
+  - bank: ICICI Bank
+    period: February 2024
+    evidence: >-
+      iMobile had onboarded more than one crore customers of other banks, with
+      repeat use across payments, transfers, recharges, and balance checks.
+    implication: Include non-primary users and product-specific repeat behaviour.
+    source: ICICI Bank press release
+    page: Web page
+    url: https://www.icici.bank.in/about-us/news-room/2024/press-release-icici-banks-imobile-is-used-by-one-crore-customers-from-other-banks
+  - bank: Kotak Mahindra Bank
+    period: FY2025
+    evidence: >-
+      A regulatory direction paused digital onboarding and new credit-card
+      issuance until February 2025 while the bank deepened existing 811
+      relationships and reworked its persona-based app strategy.
+    implication: Include cohort-level acquisition shocks and reactivation.
+    source: Kotak Mahindra Bank Integrated Annual Report 2024-25
+    page: 9 and 24-25
+    url: https://www.kotak.com/bank/mailers/annualreport/documents/Kotak%20Integrated%20Annual%20Report%202024-25.pdf

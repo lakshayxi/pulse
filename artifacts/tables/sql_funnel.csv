@@ -1,0 +1,8 @@
+stage,customers,metric_scope,conversion_from_signup,conversion_from_previous
+signup,100000.0,sequential_funnel,1.0,
+onboarding_completed,74458.0,sequential_funnel,0.74458,0.74458
+account_funded,58078.0,sequential_funnel,0.58078,0.7800102070966183
+first_transaction_7d,42254.0,sequential_funnel,0.42254,0.7275388270945969
+repeat_usage,40996.0,sequential_funnel,0.40996,0.9702276707530648
+sustained_engagement_d30,20909.0,sequential_funnel,0.20909,0.5100253683286174
+d30_retention_overall,23604.0,overall_retention,0.23604,

@@ -1,0 +1,17 @@
+propensity_bin,treatment,customers,diagnostic,value,threshold,status
+"(-0.001, 0.1]",0,0,bin_count,,,context
+"(-0.001, 0.1]",1,0,bin_count,,,context
+"(0.1, 0.2]",0,0,bin_count,,,context
+"(0.1, 0.2]",1,0,bin_count,,,context
+"(0.2, 0.4]",0,14095,bin_count,,,context
+"(0.2, 0.4]",1,8615,bin_count,,,context
+"(0.4, 0.6]",0,1341,bin_count,,,context
+"(0.4, 0.6]",1,887,bin_count,,,context
+"(0.6, 0.8]",0,5839,bin_count,,,context
+"(0.6, 0.8]",1,19038,bin_count,,,context
+"(0.8, 0.9]",0,0,bin_count,,,context
+"(0.8, 0.9]",1,0,bin_count,,,context
+"(0.9, 1.0]",0,0,bin_count,,,context
+"(0.9, 1.0]",1,0,bin_count,,,context
+common_support_share,,49815,common_support_share,1.0,0.95,pass
+weighted_max_absolute_smd,,49815,weighted_max_absolute_smd,0.0034896033177552123,0.1,pass

@@ -1,0 +1,2 @@
+brier,roc_auc,pr_auc,evaluation_customers,evaluation_events,top_decile_customers,lift_at_10pct,capture_at_10pct,precision_at_10pct
+0.16344203074746402,0.6066410694920426,0.8419177084752294,4635,3651,464,1.16007423568413,0.11613256642015886,0.9137931034482759

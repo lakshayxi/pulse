@@ -1,0 +1,2 @@
+treated_pre,treated_post,control_pre,control_post,treated_change,control_change,did_effect,iptw_did_effect,iptw_standard_error,iptw_ci_low,iptw_ci_high,uncertainty_method,effective_sample_size
+0.2184915907498248,0.1944551506657323,0.21497062279670975,0.18061104582843712,-0.024036440084092503,-0.03435957696827263,0.010323136884180129,0.009476567011063891,0.004362379314637099,0.0009263035543751776,0.018026830467752605,normal approximation on weighted customer-week means; ignores within-customer correlation,42116.2497698531

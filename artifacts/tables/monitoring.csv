@@ -1,0 +1,17 @@
+kind,measure,value,interpretation
+performance,brier,0.13349407538542232,later temporal holdout
+performance,roc_auc,0.7518396174208186,later temporal holdout
+performance,pr_auc,0.4394085252804957,later temporal holdout
+performance,evaluation_customers,11728.0,later temporal holdout
+performance,evaluation_events,2300.0,later temporal holdout
+performance,top_decile_customers,1173.0,later temporal holdout
+performance,lift_at_10pct,2.6734571333259205,later temporal holdout
+performance,capture_at_10pct,0.2673913043478261,later temporal holdout
+performance,precision_at_10pct,0.5242966751918159,later temporal holdout
+feature_drift,tx_count_30d,0.002262690707929531,"PSI: <0.1 low, 0.1-0.25 moderate, >0.25 material"
+feature_drift,active_days_30d,0.002269320141729898,"PSI: <0.1 low, 0.1-0.25 moderate, >0.25 material"
+feature_drift,gross_volume_30d,0.001225892047256126,"PSI: <0.1 low, 0.1-0.25 moderate, >0.25 material"
+feature_drift,category_breadth_30d,0.0011537364265762663,"PSI: <0.1 low, 0.1-0.25 moderate, >0.25 material"
+feature_drift,days_since_last_tx,0.00037397525120521393,"PSI: <0.1 low, 0.1-0.25 moderate, >0.25 material"
+feature_drift,has_savings,0.0,"PSI: <0.1 low, 0.1-0.25 moderate, >0.25 material"
+feature_drift,funded_by_cutoff,0.0,"PSI: <0.1 low, 0.1-0.25 moderate, >0.25 material"
