@@ -1,0 +1,17 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+        with: { version: latest }
+      - run: uv sync --extra dev --locked
+      - run: uv run --locked ruff check .
+      - run: uv run --locked ruff format --check .
+      - run: uv run --locked python -m pulse.pipeline --profile ci
+        env:
+          MPLCONFIGDIR: /tmp/pulse-matplotlib
+          LOKY_MAX_CPU_COUNT: "8"
+      - run: uv run --locked pytest -q
